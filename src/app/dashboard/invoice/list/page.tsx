@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 import Radio from "@/components/Radio/Index";
+import {indianRupeeFormat} from "../../../../library/stringPlus";
 
 export default function DashboardInvoiceList() {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("All");
   return (
     <>
       <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
@@ -53,14 +54,13 @@ export default function DashboardInvoiceList() {
               </div>
               <div className="flex flex-col ">
                 {[0, 1, 2, 3].map(({}: any, i) => (
-                  <div key={i} id={'ititi-' + i} className="grid grid-cols-3 sm:grid-cols-5 border-b border-stroke dark:border-strokedark">
-                    <div className="flex items-center gap-3 p-2.5 xl:p-5">
-                      <p className="hidden text-black dark:text-white sm:block">
-                        Google
-                      </p>
+                  <div key={i} id={'ititi-' + i} className={`grid grid-cols-3 sm:grid-cols-5 ${i < 3 && "border-b border-stroke dark:border-strokedark"}`}>
+                    <div className="p-2.5 xl:p-5">
+                      <p className="hidden text-black dark:text-white sm:block">Customer name</p>
+                      <p>Invoice id</p>
                     </div>
                     <div className="flex items-center justify-center p-2.5 xl:p-5">
-                      <p className="text-black dark:text-white">3.5K</p>
+                      <p className="text-black dark:text-white">{indianRupeeFormat(5000)}</p>
                     </div>
                     <div className="flex items-center justify-center p-2.5 xl:p-5">
                       <p className="text-meta-3">$5,768</p>
