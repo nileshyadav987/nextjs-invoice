@@ -44,19 +44,19 @@ export default function Home() {
               </a>
               <div className="hidden md:flex md:gap-x-6">
                 <a
-                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   href="#features"
                 >
                   Features
                 </a>
                 <a
-                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   href="#testimonials"
                 >
                   Testimonials
                 </a>
                 <a
-                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   href="#pricing"
                 >
                   Pricing
@@ -66,7 +66,7 @@ export default function Home() {
             <div className="flex items-center gap-x-5 md:gap-x-8">
               <div className="hidden md:block">
                 <Link
-                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                  className="inline-block rounded-lg px-2 py-1 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   href="/login"
                 >
                   Sign in
@@ -146,7 +146,7 @@ export default function Home() {
             </span>{" "}
             Powerful Invoicing Platform.
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
+          <p className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-600">
             Most bookkeeping software is accurate, but hard to use. We make the
             opposite trade-off, and hope you don’t get audited.
           </p>
@@ -158,7 +158,7 @@ export default function Home() {
               Get 6 months free
             </a>
             <a
-              className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300"
+              className="group inline-flex ring-1 items-center justify-center rounded-full py-2 px-4 text-sm focus:outline-none ring-slate-200 text-slate-600 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-600 focus-visible:outline-blue-600 focus-visible:ring-slate-300"
               href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             >
               <svg
@@ -414,7 +414,7 @@ export default function Home() {
               <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
                 Simplify everyday business tasks.
               </h2>
-              <p className="mt-4 text-lg tracking-tight text-slate-700">
+              <p className="mt-4 text-lg tracking-tight text-slate-600">
                 Because you’d probably be a little confused if we suggested you
                 complicate your everyday business tasks instead.
               </p>
@@ -765,7 +765,7 @@ export default function Home() {
               <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
                 Loved by businesses worldwide.
               </h2>
-              <p className="mt-4 text-lg tracking-tight text-slate-700">
+              <p className="mt-4 text-lg tracking-tight text-slate-600">
                 Our software is so simple that people can’t help but fall in
                 love with it. Simplicity is easy when you just skip tons of
                 mission-critical features.
@@ -1468,7 +1468,7 @@ export default function Home() {
               >
                 Frequently asked questions
               </h2>
-              <p className="mt-4 text-lg tracking-tight text-slate-700">
+              <p className="mt-4 text-lg tracking-tight text-slate-600">
                 If you can’t find what you’re looking for, email our support
                 team and if you’re lucky someone will get back to you.
               </p>
@@ -1483,7 +1483,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       Does TaxPal handle VAT?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       Well no, but if you move your company offshore you can
                       probably ignore it.
                     </p>
@@ -1492,7 +1492,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       Can I pay for my subscription via purchase order?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       Absolutely, we are happy to take your money in all forms.
                     </p>
                   </li>
@@ -1500,7 +1500,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       How do I apply for a job at TaxPal?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       We only hire our customers, so subscribe for a minimum of
                       6 months and then let’s talk.
                     </p>
@@ -1513,7 +1513,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       What was that testimonial about tax fraud all about?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       TaxPal is just a software application, ultimately your
                       books are your responsibility.
                     </p>
@@ -1523,7 +1523,7 @@ export default function Home() {
                       TaxPal sounds horrible but why do I still feel compelled
                       to purchase?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       This is the power of excellent visual design. You just
                       can’t resist it, no matter how poorly it actually
                       functions.
@@ -1534,7 +1534,7 @@ export default function Home() {
                       I found other companies called TaxPal, are you sure you
                       can use this name?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       Honestly not sure at all. We haven’t actually incorporated
                       or anything, we just thought it sounded cool and made this
                       website.
@@ -1548,7 +1548,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       How do you generate reports?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       You just tell us what data you need a report for, and we
                       get our kids to create beautiful charts for you using only
                       the finest crayons.
@@ -1558,7 +1558,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       Can we expect more inventory features?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       In life it’s really better to never expect anything at
                       all.
                     </p>
@@ -1567,7 +1567,7 @@ export default function Home() {
                     <h3 className="font-display text-lg leading-7 text-slate-900">
                       I lost my password, how do I get into my account?
                     </h3>
-                    <p className="mt-4 text-sm text-slate-700">
+                    <p className="mt-4 text-sm text-slate-600">
                       Send us an email and we will send you a copy of our latest
                       password spreadsheet so you can find your information.
                     </p>
