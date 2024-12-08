@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/library/mongoose";
 import User from "@/models/userModel";
 import { generateToken } from "@/library/jwt";
+import Business from "@/models/businessModel";
+import mongoose from "mongoose";
 export async function POST(req: NextRequest) {
   try {
     await connectToDatabase();
@@ -18,8 +20,10 @@ export async function POST(req: NextRequest) {
     const user = userData.toJSON();
     delete user.password;
     const token = generateToken(user);
+    console.log("data user ----------------------", user);
     return NextResponse.json({ token, user }, { status: 200 });
-  } catch {
+  } catch(e) {
+    console.error('err33------->', e);
     return NextResponse.json({}, { status: 500 });
   }
 }

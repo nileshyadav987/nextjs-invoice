@@ -56,3 +56,8 @@
   --tw-bg-opacity: 1 !important;
   background-color: rgb(60 80 224 / var(--tw-bg-opacity))!important;
 }
+
+button, input, optgroup, select, textarea {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}

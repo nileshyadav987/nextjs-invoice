@@ -1,13 +1,19 @@
-import jwt from "jsonwebtoken";
+import jwt, { SignOptions } from "jsonwebtoken";
 import { jwtVerify } from "jose";
 
 const secretKey = "Ny@Ny@yN@987#"; // Keep your JWT secret in environment variables
 
 // Function to generate a JWT token
-export const generateToken = (user: object): string => {
-  const options = { expiresIn: "15d" }; // Token expiration (e.g., 1 hour)
+export const generateToken = (data: Record<string, any>): string => {
+  const options: SignOptions = {}; // Token expiration (e.g., 1 hour)
+  if("password" in data) {
+    options.expiresIn = "15d";
+  }
+  delete data.exp;
+  delete data.iat;
+  delete data.password; // present in users
   // Generate JWT token
-  return jwt.sign(user, secretKey, options);
+  return jwt.sign(data, secretKey, options);
 };
 
 export const decodeToken = async (token: string) => {

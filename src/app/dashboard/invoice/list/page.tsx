@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import Radio from "@/components/Radio/Index";
-import {indianRupeeFormat} from "../../../../library/stringPlus";
+import { indianRupeeFormat } from "@/library/stringPlus";
+import Link from "next/link";
+
 
 export default function DashboardInvoiceList() {
   const [selectedOption, setSelectedOption] = useState("All");
@@ -47,9 +49,9 @@ export default function DashboardInvoiceList() {
                   </div>
                 </div>
                 <div>
-                  <a className="inline-flex items-center justify-center rounded-md border border-primary py-4 px-10 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10">
+                  <Link href={"/dashboard/invoice/new"} className="inline-flex items-center justify-center rounded-md border border-primary py-4 px-10 text-center font-medium text-primary hover:bg-opacity-90 lg:px-8 xl:px-10">
                     Add New
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex flex-col ">

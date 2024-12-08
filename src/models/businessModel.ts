@@ -6,7 +6,7 @@ export interface IBusiness extends Document {
   createdBy: mongoose.Types.ObjectId; // Refers to the user who created the business
   users: {
     userId: mongoose.Types.ObjectId;
-    role: "view" | "edit";
+    role: "view" | "edit" | "admin";
   }[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -20,7 +20,7 @@ const businessSchema: Schema = new Schema(
     users: [
       {
         userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-        role: { type: String, enum: ["view", "edit"], required: true },
+        role: { type: String, enum: ["view", "edit", "admin"], required: true },
       },
     ],
   },

@@ -1,8 +1,11 @@
 // src/app/api/test/route.ts
 import { connectToDatabase } from "@/library/mongoose";
-import { NextResponse } from "next/server";
+import { getBusinessDetailsFromToken, getUserDetailsFromToken } from "@/library/utilities";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   await connectToDatabase();
-  return NextResponse.json({ message: "Test API route" });
+  const userMainData = getUserDetailsFromToken(req);
+  const businessMainData = getBusinessDetailsFromToken(req);
+  return NextResponse.json({ userMainData, businessMainData, message: "Test API route" });
 }
