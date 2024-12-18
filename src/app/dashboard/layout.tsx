@@ -11,19 +11,16 @@ export const metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark sidebar-bg">
       <div className="flex h-screen overflow-hidden">
         <Sidebar />
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-          <InnerHeader />
-          <main>
-            {children}
-          </main>
+          {children}
         </div>
       </div>
     </div>

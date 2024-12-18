@@ -1,4 +1,4 @@
-import NewBusinessProfile from "@/components/Form/NewBusinessProfile";
+import NewBusinessProfile from "@/components/Business/NewBusinessProfile";
 import Image from "next/image";
 import Link from "next/link";
 

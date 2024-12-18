@@ -20,8 +20,9 @@ export async function POST(req: NextRequest) {
     const user = userData.toJSON();
     delete user.password;
     const token = generateToken(user);
-    console.log("data user ----------------------", user);
-    return NextResponse.json({ token, user }, { status: 200 });
+    const response = NextResponse.json({ token, user }, { status: 200 });
+    response.cookies.set('x-access-token', token);
+    return response;
   } catch(e) {
     console.error('err33------->', e);
     return NextResponse.json({}, { status: 500 });

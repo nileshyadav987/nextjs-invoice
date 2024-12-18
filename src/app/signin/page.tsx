@@ -1,4 +1,4 @@
-import Signin from "@/components/Form/Signin";
+import Signin from "@/components/Authentiction/Signin";
 import Image from "next/image";
 import Link from "next/link";
 

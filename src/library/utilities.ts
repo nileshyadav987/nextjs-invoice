@@ -20,15 +20,21 @@ export const getUserDetailsFromToken = async (req: NextRequest) => {
   }
 };
 
-export const getBusinessDetailsFromToken = (req: NextRequest) => {
+export const getBusinessDetailsFromToken = async (req: NextRequest) => {
   try {
-    const data = req.cookies.get("x-business-token")?.value;
-    if (!data) {
+    const token = req.cookies.get("x-business-token")?.value;
+    if (!token) {
+      console.error("Business token not found in cookies.");
+      return null; // Return null if the token is not present
+    }
+    console.log("data--------------------------------------------->", token);
+    const decoded = await decodeToken(token);
+    if (!decoded) {
       return null; // Return null if the header is not present
     }
-    return JSON.parse(data); // Parse and return the object
+    return decoded; // Parse and return the object
   } catch (error) {
-    console.error("Error parsing user data from token:", error);
+    console.error("Error parsing business data from token:", error);
     return null; // Return null if JSON parsing fails
   }
 };
