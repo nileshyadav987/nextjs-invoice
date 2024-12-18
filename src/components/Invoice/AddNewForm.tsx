@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import InnerHeader from "../InnerHeader/Index";
+import Link from "next/link";
 
 const AddNewForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -86,8 +87,8 @@ const AddNewForm = () => {
       <InnerHeader>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <button
-              type="button"
+            <Link
+              href={"/dashboard/invoice/list"}
               className="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               <svg
@@ -103,7 +104,7 @@ const AddNewForm = () => {
                 />
               </svg>
               Invoices
-            </button>
+            </Link>
             <h2 className="ms-2 text-xl font-semibold text-black dark:text-white">
               New Invoice
             </h2>

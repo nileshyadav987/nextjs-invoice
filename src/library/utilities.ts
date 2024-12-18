@@ -1,6 +1,30 @@
 import { NextRequest } from "next/server";
 import { decodeToken } from "./jwt";
 
+// utils/api.ts
+export interface FetchOptions extends RequestInit {
+  headers?: HeadersInit;
+}
+
+export async function fetchApi<T>(url: string, options: FetchOptions = {}): Promise<T> {
+  try {
+    const response = await fetch(url, options);
+
+    // Check if response is OK (status 200-299)
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `Error: ${response.status}`);
+    }
+
+    // Parse response data
+    const data: T = await response.json();
+    return data; // Final data passed to the calling function
+  } catch (error) {
+    console.error("Fetch Error:", error instanceof Error ? error.message : error);
+    throw error; // Re-throw error to be handled by the caller
+  }
+}
+
 export const getUserDetailsFromToken = async (req: NextRequest) => {
   try {
     const token = req.cookies.get("x-access-token")?.value;

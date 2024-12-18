@@ -1,10 +1,26 @@
 'use client'
+import { fetchApi } from "@/library/utilities";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from "react";
 
 const Sidebar = () => {
   const currentRoute = usePathname();
+  const [mainData, setMainData] = useState({});
   console.log('nil22', currentRoute);
+  useEffect(()=> {
+    getBusinessInfo();
+  }, []);
+
+  const getBusinessInfo = async () => {
+    try {
+      const r = await fetchApi("/api/business/details");
+      console.log('r43', r);
+      setMainData(r.business);
+    } catch {
+      console.error("err44");
+    }
+  }
   return (
     <aside className="absolute left-0 top-0 z-9999 flex h-screen w-72 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 -translate-x-full">
       <div className="flex items-center justify-between gap-2 px-6 lg:py-5">
@@ -56,8 +72,12 @@ const Sidebar = () => {
           </svg>
         </button>
       </div>
+      <div className="text-slate-100 mt-5 py-4 px-4 lg:mt-0 lg:px-6">
+        <p>{mainData?.name}</p>
+        <p className="text-xs">{mainData?.address}</p>
+      </div>
       <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
+        <nav className="mt-5 py-4 px-4 lg:mt-0 lg:px-6">
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
               <li>
