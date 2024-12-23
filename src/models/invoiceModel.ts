@@ -11,6 +11,7 @@ export interface IInvoice extends Document {
   total: number;
   business: mongoose.Types.ObjectId; // Refers to the associated business
   createdBy: mongoose.Types.ObjectId; // Refers to the user who created the invoice
+  status: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -27,8 +28,12 @@ const invoiceSchema: Schema = new Schema(
     ],
     subtotal: { type: Number, required: true },
     total: { type: Number, required: true },
+    totalPaid: { type: Number, required: true },
+    balance: { type: Number, required: true },
     business: { type: mongoose.Schema.Types.ObjectId, ref: "Business", required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    status: { type: String, default: "draft" },
+    dueAt: { type: Date },
   },
   { timestamps: true }
 );

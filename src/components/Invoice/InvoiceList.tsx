@@ -1,5 +1,4 @@
 "use client";
-import { indianRupeeFormat } from "@/library/stringPlus";
 import Radio from "../Radio/Index";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -63,16 +62,42 @@ const InvoiceList = () => {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col ">
-        {myListData.map((v: any, i) => (
-          <div
-            key={i}
-            id={"ititi-" + i}
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
-              i < 3 && "border-b border-stroke dark:border-strokedark"
-            }`}
-          ><InvoiceCard data={v} /></div>
-        ))}
+      <div className="relative overflow-x-auto mt-4">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Number
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Client
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Amount
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Balance
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Date
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Due Date
+              </th>
+              <th scope="col" className="px-6 py-3">
+                &nbsp;
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {myListData.map((v: Invoice, i) => (
+                <InvoiceCard data={v} key={i} />
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
