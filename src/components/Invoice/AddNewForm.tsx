@@ -2,18 +2,43 @@
 import { useEffect, useState } from "react";
 import InnerHeader from "../InnerHeader/Index";
 import Link from "next/link";
+import Modal from "../Modal";
+import ClientList from "../ClientList";
+import { Client } from "@/types/client.types";
+import { fetchApi } from "@/library/utilities";
 
 const AddNewForm = () => {
+  const [myClients, setMyClients] = useState<Client[]>([]);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const item = { description: "", qty: "", rate: "" }; // Removed price from the item template
-  const [mainData, setMainData] = useState({
+  const [mainData, setMainData] = useState<{
+    subtotal: string;
+    total: string;
+    items: typeof item[];
+    client: Client | null; // Allow `null` for cases where no client is selected
+  }>({
     subtotal: "0",
     total: "0",
     items: [item],
+    client: null,
   });
+
+  useEffect(() => {
+    loadInitialData();
+  }, []);
+  const loadInitialData = async () => {
+    try {
+      const r = await fetchApi<{ clients: Client[] }>("/api/client/list");
+      console.log("r---->", r.clients);
+      setMyClients(r.clients);
+    } catch {
+      console.error("Client list loading error:");
+    }
+  };
 
   const addNewRow = () => {
     setMainData((prev) => ({
@@ -48,11 +73,12 @@ const AddNewForm = () => {
       return sum + qty * rate;
     }, 0);
 
-    setMainData({
+    setMainData((prev) => ({
+      ...prev,
       items: updatedItems,
       subtotal: totalAmount.toString(),
       total: totalAmount.toString(),
-    });
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,7 +97,7 @@ const AddNewForm = () => {
       if (!response.ok) {
         setError(result.message || "Something went wrong");
       } else {
-        setMainData(prev=> ({...prev, _id: result.invoice._id}));
+        setMainData((prev) => ({ ...prev, _id: result.invoice._id }));
         console.log("Saved successful", result);
       }
     } catch (err) {
@@ -127,6 +153,16 @@ const AddNewForm = () => {
         </div>
       </InnerHeader>
       <main>
+        <Modal open={open}>
+          <ClientList
+            data={myClients}
+            onRowChoose={(v) => {
+              console.log("v-->", v);
+              setMainData((prev) => ({ ...prev, client: v }));
+              setOpen(false);
+            }}
+          />
+        </Modal>
         <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
             <div className="col-span-12">
@@ -140,6 +176,28 @@ const AddNewForm = () => {
 
                 <div className="relative overflow-x-auto">
                   <>
+                    <div className="mb-4">
+                      {mainData?.client ? (
+                        <>
+                          <p>{mainData.client.name}</p>
+                          <p>{mainData.client.address}</p>
+                          <p><Link onClick={(e)=> {
+                            e.preventDefault();
+                            setMainData((prev)=> ({...prev, client: null}));
+                          }} href="#" className="text-xs text-sky-400">Remove</Link></p>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="text-gray-700 hover:text-white border border-gray-700 hover:bg-gray-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                            onClick={() => setOpen(true)}
+                          >
+                            Add Client
+                          </button>
+                        </>
+                      )}
+                    </div>
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>

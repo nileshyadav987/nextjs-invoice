@@ -1,3 +1,4 @@
+
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IInvoice extends Document {
@@ -14,6 +15,13 @@ export interface IInvoice extends Document {
   status: string;
   createdAt?: Date;
   updatedAt?: Date;
+  client?: {
+    _id: { type: mongoose.Types.ObjectId };
+    name: { type: String };
+    email: { type: String };
+    mobile: { type: String };
+    address: { type: String };
+  };
 }
 
 const invoiceSchema: Schema = new Schema(
@@ -29,15 +37,30 @@ const invoiceSchema: Schema = new Schema(
     subtotal: { type: Number, required: true },
     total: { type: Number, required: true },
     totalPaid: { type: Number, required: true },
-    balance: { type: Number, required: true },
-    business: { type: mongoose.Schema.Types.ObjectId, ref: "Business", required: true },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    status: { type: String, default: "draft" },
+    business: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Business",
+      required: true,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    status: { type: String, required: true, default: "draft" },
     dueAt: { type: Date },
+    client: {
+      _id: { type: String },
+      name: { type: String },
+      email: { type: String },
+      mobile: { type: String },
+      address: { type: String },
+    },
   },
   { timestamps: true }
 );
 
-const Invoice = mongoose.models.Invoice || mongoose.model<IInvoice>("Invoice", invoiceSchema);
+const Invoice =
+  mongoose.models.Invoice || mongoose.model<IInvoice>("Invoice", invoiceSchema);
 
 export default Invoice;

@@ -1,4 +1,4 @@
-import InvoiceList from "@/components/Invoice/InvoiceList";
+import ClientListPage from "@/components/ClientListPage";
 
 export default function DashboardInvoiceList() {
   return (
@@ -12,7 +12,7 @@ export default function DashboardInvoiceList() {
               </h2>
             </div>
             <div className="rounded-sm border border-stroke bg-white p-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <InvoiceList />
+              <ClientListPage />
             </div>
           </div>
         </div>

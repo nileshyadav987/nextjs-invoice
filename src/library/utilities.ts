@@ -6,7 +6,10 @@ export interface FetchOptions extends RequestInit {
   headers?: HeadersInit;
 }
 
-export async function fetchApi<T>(url: string, options: FetchOptions = {}): Promise<T> {
+export async function fetchApi<T>(
+  url: string,
+  options: FetchOptions = {}
+): Promise<T> {
   try {
     const response = await fetch(url, options);
 
@@ -20,45 +23,34 @@ export async function fetchApi<T>(url: string, options: FetchOptions = {}): Prom
     const data: T = await response.json();
     return data; // Final data passed to the calling function
   } catch (error) {
-    console.error("Fetch Error:", error instanceof Error ? error.message : error);
+    console.error(
+      "Fetch Error:",
+      error instanceof Error ? error.message : error
+    );
     throw error; // Re-throw error to be handled by the caller
   }
 }
 
-export const getUserDetailsFromToken = async (req: NextRequest) => {
-  try {
-    const token = req.cookies.get("x-access-token")?.value;
-    if (!token) {
-      console.error("Token not found in cookies.");
-      return null; // Return null if the token is not present
-    }
-    console.log("data--------------------------------------------->", token);
-    const decoded = await decodeToken(token);
-    if (!decoded) {
-      return null; // Return null if the header is not present
-    }
-    return decoded; // Parse and return the object
-  } catch (error) {
-    console.error("Error parsing user data from token:", error);
-    return null; // Return null if JSON parsing fails
-  }
-};
+interface DecodedToken {
+  _id: string;
+  [key: string]: any; // If there are additional fields that you don't want to specify now
+}
 
+export const getUserDetailsFromToken = async (req: NextRequest): Promise<DecodedToken> => {
+  const token = req.cookies.get("x-access-token")?.value;
+  if (!token) throw new Error("User token not found.");
+  
+  const decoded = (await decodeToken(token)) as DecodedToken | null;
+  if (!decoded || !decoded._id) throw new Error("Invalid or missing user details in token.");
+
+  return decoded;
+};
 export const getBusinessDetailsFromToken = async (req: NextRequest) => {
-  try {
-    const token = req.cookies.get("x-business-token")?.value;
-    if (!token) {
-      console.error("Business token not found in cookies.");
-      return null; // Return null if the token is not present
-    }
-    console.log("data--------------------------------------------->", token);
-    const decoded = await decodeToken(token);
-    if (!decoded) {
-      return null; // Return null if the header is not present
-    }
-    return decoded; // Parse and return the object
-  } catch (error) {
-    console.error("Error parsing business data from token:", error);
-    return null; // Return null if JSON parsing fails
-  }
+  const token = req.cookies.get("x-business-token")?.value;
+  if (!token) throw new Error("Business token not found.");
+  
+  const decoded = (await decodeToken(token)) as DecodedToken | null;
+  if (!decoded || !decoded._id) throw new Error("Invalid or missing business details in token.");
+
+  return decoded;
 };

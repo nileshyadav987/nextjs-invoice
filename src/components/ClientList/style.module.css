@@ -1,0 +1,12 @@
+.iv-status-paid {
+    --tw-text-opacity: 1;
+    color: rgb(22 101 52 / var(--tw-text-opacity, 1));
+    --tw-bg-opacity: 1;
+    background-color: rgb(220 252 231 / var(--tw-bg-opacity, 1));
+}
+.iv-status-draft {
+    --tw-text-opacity: 1;
+    color: rgb(30 66 159/var(--tw-text-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(225 239 254/var(--tw-bg-opacity));
+}

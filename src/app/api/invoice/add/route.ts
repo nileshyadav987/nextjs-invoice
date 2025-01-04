@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/library/mongoose";
-import { getBusinessDetailsFromToken, getUserDetailsFromToken } from "@/library/utilities";
+import {
+  getBusinessDetailsFromToken,
+  getUserDetailsFromToken,
+} from "@/library/utilities";
 import Invoice from "@/models/invoiceModel";
 
 export async function POST(req: NextRequest) {
   try {
     const userMainData = await getUserDetailsFromToken(req);
     const businessMainData = await getBusinessDetailsFromToken(req);
-    // console.log('userMainData-------------------------------->', typeof userMainData, userMainData);
+
     await connectToDatabase();
     const input = await req.json();
 
     let updatedItems = [...input.items];
-    updatedItems = updatedItems.map(item=> {
+    updatedItems = updatedItems.map((item) => {
       const qty = Number(item.qty || 0);
       const rate = Number(item.rate || 0);
-      return ({...item, qty, rate, price: qty * rate});
+      return { ...item, qty, rate, price: qty * rate };
     });
     // Recalculate the total amount dynamically
     const totalAmount = updatedItems.reduce((sum, item) => {
@@ -25,7 +28,7 @@ export async function POST(req: NextRequest) {
     }, 0);
 
     let invoice;
-    if(input._id) {
+    if (input._id) {
       invoice = await Invoice.findById(input._id);
       if (!invoice) {
         throw new Error("Invoice ID not found.");
@@ -33,23 +36,19 @@ export async function POST(req: NextRequest) {
       invoice.items = updatedItems;
       invoice.subtotal = totalAmount;
       invoice.total = totalAmount;
+      invoice.client = input.client;
     } else {
       invoice = new Invoice({
         items: updatedItems,
-        business: businessMainData?._id,
-        createdBy: userMainData?._id,
+        business: businessMainData._id,
+        createdBy: userMainData._id,
         subtotal: totalAmount,
         total: totalAmount,
+        client: input.client,
+        totalPaid: 0,
       });
     }
 
-    console.log('invoice----------------', {
-      items: updatedItems,
-      business: businessMainData?._id,
-      createdBy: userMainData?._id,
-      subtotal: totalAmount,
-      total: totalAmount,
-    });
     await invoice.save();
     return NextResponse.json({ invoice }, { status: 200 });
   } catch (e) {
