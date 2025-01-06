@@ -4,5 +4,5 @@ export interface Client {
   mobile: string;
   email: string;
   address: string;
-  [key: string]: string | number | boolean; // Add other fields here
+  // [key: string]: string | number | boolean; // Add other fields here
 }

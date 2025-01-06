@@ -1,6 +1,7 @@
 import { Invoice } from "@/types/invoice.types";
 import { indianRupeeFormat } from "@/library/stringPlus";
 import style from "./style.module.css";
+import Link from "next/link";
 
 const InvoiceCard = ({ data }: { data: Invoice }) => {
   // console.log("esd", data);
@@ -18,7 +19,9 @@ const InvoiceCard = ({ data }: { data: Invoice }) => {
       </td>
       <td className="px-6 py-4"
       >
+        <Link href={"/dashboard/invoices/" + data._id}>
         inv-01
+        </Link>
       </td>
       <td className="px-6 py-4">Client Name</td>
       <td className="px-6 py-4">{indianRupeeFormat(data?.total)}</td>

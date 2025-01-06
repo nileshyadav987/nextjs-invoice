@@ -1,10 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase } from "@/library/mongoose";
 import {
   getBusinessDetailsFromToken,
   getUserDetailsFromToken,
 } from "@/library/utilities";
 import Invoice from "@/models/invoiceModel";
+import { connectToDatabase } from "@/library/mongoose";
+
+export async function GET(req: NextRequest) {
+  try {
+    // Extract query parameters
+    const url = new URL(req.url);
+    const invoiceId = url.searchParams.get("id");
+
+    if (!invoiceId) {
+      return NextResponse.json(
+        { error: "Invoice ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Retrieve business details from the token
+    const businessMainData = await getBusinessDetailsFromToken(req);
+
+    // Find the invoice by ID
+    const invoice = await Invoice.findOne({
+      _id: invoiceId,
+      business: businessMainData._id,
+    });
+
+    if (!invoice) {
+      return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
+    }
+
+    // Respond with the invoice and business details
+    return NextResponse.json({ invoice }, { status: 200 });
+  } catch (e) {
+    console.error("Error retrieving invoice:", e);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {

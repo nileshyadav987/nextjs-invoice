@@ -41,7 +41,7 @@ const Sidebar = () => {
 
   const getBusinessInfo = async () => {
     try {
-      const r = await fetchApi("/api/business/details");
+      const r = await fetchApi("/api/business/view");
       console.log("r43", r);
       setMainData(r.business);
     } catch {

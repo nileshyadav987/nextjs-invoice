@@ -6,32 +6,51 @@ import Modal from "../Modal";
 import ClientList from "../ClientList";
 import { Client } from "@/types/client.types";
 import { fetchApi } from "@/library/utilities";
+import { Invoice } from "@/types/invoice.types";
+import { Dropdown } from "flowbite-react";
 
-const AddNewForm = () => {
+interface DashboardInvoiceViewProps {
+  id?: string;
+}
+
+const AddNewForm = ({ id }: DashboardInvoiceViewProps) => {
   const [myClients, setMyClients] = useState<Client[]>([]);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const item = { description: "", qty: "", rate: "" }; // Removed price from the item template
-  const [mainData, setMainData] = useState<{
-    subtotal: string;
-    total: string;
-    items: typeof item[];
-    client: Client | null; // Allow `null` for cases where no client is selected
-  }>({
-    subtotal: "0",
-    total: "0",
-    items: [item],
+  const item = { description: "", qty: 0, rate: 0 }; // Removed price from the item template
+  const [mainData, setMainData] = useState<Invoice>({
+    _id: "",
+    total: 0,
+    totalPaid: 0,
+    paid: false,
+    status: "",
+    items: [{ description: "", qty: 0, rate: 0 }],
     client: null,
+    subtotal: 0,
   });
 
   useEffect(() => {
     loadInitialData();
   }, []);
+
   const loadInitialData = async () => {
     try {
+      const r1 = await fetchApi<{
+        invoice: Invoice;
+      }>("/api/invoice/view?id=" + id);
+      console.log("r1---", r1);
+      const invoiceData = r1.invoice ?? {
+        subtotal: 0,
+        total: 0,
+        items: [],
+        client: null,
+      };
+
+      setMainData(invoiceData);
+
       const r = await fetchApi<{ clients: Client[] }>("/api/client/list");
       console.log("r---->", r.clients);
       setMyClients(r.clients);
@@ -76,8 +95,8 @@ const AddNewForm = () => {
     setMainData((prev) => ({
       ...prev,
       items: updatedItems,
-      subtotal: totalAmount.toString(),
-      total: totalAmount.toString(),
+      subtotal: totalAmount,
+      total: totalAmount,
     }));
   };
 
@@ -132,7 +151,7 @@ const AddNewForm = () => {
               Invoices
             </Link>
             <h2 className="ms-2 text-xl font-semibold text-black dark:text-white">
-              New Invoice
+            {id || "New Invoice"}
             </h2>
           </div>
           <div className="flex items-center">
@@ -143,12 +162,30 @@ const AddNewForm = () => {
             >
               Save Draft
             </button>
-            <button
-              type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-              Save
-            </button>
+
+            <Dropdown label="Options" dismissOnClick={true}>
+              <Dropdown.Item
+                onClick={() => {
+                  console.log("www1", "Hello world");
+                }}
+              >
+                Send
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  console.log("www1", "Hello world");
+                }}
+              >
+                Mark as sent
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => {
+                  console.log("www1", "Hello world");
+                }}
+              >
+                Download
+              </Dropdown.Item>
+            </Dropdown>
           </div>
         </div>
       </InnerHeader>
@@ -181,10 +218,21 @@ const AddNewForm = () => {
                         <>
                           <p>{mainData.client.name}</p>
                           <p>{mainData.client.address}</p>
-                          <p><Link onClick={(e)=> {
-                            e.preventDefault();
-                            setMainData((prev)=> ({...prev, client: null}));
-                          }} href="#" className="text-xs text-sky-400">Remove</Link></p>
+                          <p>
+                            <Link
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setMainData((prev) => ({
+                                  ...prev,
+                                  client: null,
+                                }));
+                              }}
+                              href="#"
+                              className="text-xs text-sky-400"
+                            >
+                              Remove
+                            </Link>
+                          </p>
                         </>
                       ) : (
                         <>
