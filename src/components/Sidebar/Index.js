@@ -157,6 +157,9 @@ const Sidebar = () => {
               <li>
               <MenuLink href="/dashboard/clients/list" title="Clients" />
               </li>
+              <li>
+              <MenuLink href="/dashboard/payments/list" title="Payments" />
+              </li>
             </ul>
           </div>
         </nav>

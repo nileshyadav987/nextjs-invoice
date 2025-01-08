@@ -1,6 +1,7 @@
 import ClientListPage from "@/components/ClientListPage";
+import PaymentListPage from "@/components/PaymentListPage";
 
-export default function DashboardInvoiceList() {
+export default function DashboardPaymentList() {
   return (
     <>
       <div className="mx-auto w-full p-4 md:p-6 2xl:p-10">
@@ -8,11 +9,11 @@ export default function DashboardInvoiceList() {
           <div className="col-span-12">
             <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-xl font-semibold text-black dark:text-white">
-                Clients
+                Payments
               </h2>
             </div>
             <div className="rounded-sm border border-stroke bg-white p-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <ClientListPage />
+              <PaymentListPage />
             </div>
           </div>
         </div>

@@ -5,15 +5,15 @@ import Link from "next/link";
 import InvoiceCard from "../InvoiceCard";
 import { Invoice } from "@/types/invoice.types";
 
-const InvoiceList = ({ data }: { data: Invoice[] }) => {
+const InvoiceList = ({ data, onRowChoose }: { data: Invoice[], onRowChoose?: (selectedRow: Invoice) => void }) => {
   return (
     <>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="px-6 py-3">
+            {!onRowChoose && <th scope="col" className="px-6 py-3">
               Status
-            </th>
+            </th>}
             <th scope="col" className="px-6 py-3">
               Number
             </th>
@@ -30,7 +30,7 @@ const InvoiceList = ({ data }: { data: Invoice[] }) => {
               Date
             </th>
             <th scope="col" className="px-6 py-3">
-              Due Date
+              Due&nbsp;Date
             </th>
             <th scope="col" className="px-6 py-3">
               &nbsp;
@@ -39,7 +39,7 @@ const InvoiceList = ({ data }: { data: Invoice[] }) => {
         </thead>
         <tbody>
           {data.map((v: Invoice, i) => (
-            <InvoiceCard data={v} key={i} />
+            <InvoiceCard data={v} key={i} onRowChoose={onRowChoose} />
           ))}
         </tbody>
       </table>
