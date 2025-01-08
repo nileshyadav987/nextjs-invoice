@@ -10,6 +10,7 @@ export interface IInvoice extends Document {
   }[];
   subtotal: number;
   total: number;
+  autoNumber: number;
   business: mongoose.Types.ObjectId; // Refers to the associated business
   createdBy: mongoose.Types.ObjectId; // Refers to the user who created the invoice
   status: string;
@@ -36,7 +37,7 @@ const invoiceSchema: Schema = new Schema(
     ],
     subtotal: { type: Number, required: true },
     total: { type: Number, required: true },
-    totalPaid: { type: Number, required: true },
+    totalPaid: { type: Number, default: 0 },
     business: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Business",
@@ -48,6 +49,7 @@ const invoiceSchema: Schema = new Schema(
       required: true,
     },
     status: { type: String, required: true, default: "draft" },
+    autoNumber: { type: Number, required: true },
     dueAt: { type: Date },
     client: {
       _id: { type: String },

@@ -3,6 +3,7 @@ import mongoose, { Document, Schema } from "mongoose";
 export interface IBusiness extends Document {
   name: string;
   address: string;
+  autoIncrement: number;
   createdBy: mongoose.Types.ObjectId; // Refers to the user who created the business
   users: {
     userId: mongoose.Types.ObjectId;
@@ -16,6 +17,7 @@ const businessSchema: Schema = new Schema(
   {
     name: { type: String, required: true },
     address: { type: String, required: true },
+    autoIncrement: { type: Number, default: 0 },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     users: [
       {

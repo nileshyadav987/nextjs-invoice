@@ -17,15 +17,21 @@ const InvoiceCard = ({ data }: { data: Invoice }) => {
           {data?.status}
         </span>
       </td>
-      <td className="px-6 py-4"
-      >
+      <td className="px-6 py-4">
         <Link href={"/dashboard/invoices/" + data._id}>
-        inv-01
+          inv-
+          {data?.autoNumber
+            ? data.autoNumber < 10
+              ? `0${data.autoNumber}`
+              : data.autoNumber
+            : "N/A"}
         </Link>
       </td>
       <td className="px-6 py-4">Client Name</td>
       <td className="px-6 py-4">{indianRupeeFormat(data?.total)}</td>
-      <td className="px-6 py-4">{indianRupeeFormat((data.total || 0) - (data.totalPaid || 0))}</td>
+      <td className="px-6 py-4">
+        {indianRupeeFormat((data.total || 0) - (data.totalPaid || 0))}
+      </td>
       <td className="px-6 py-4">{data.createdAt}</td>
       <td className="px-6 py-4">{data.dueAt}</td>
       <td className="px-6 py-4">$2999</td>

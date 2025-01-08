@@ -12,7 +12,7 @@ const ClientListPage = () => {
   }, []);
   const loadInitialData = async () => {
     try {
-      const r = await fetchApi<{ clients: Client[] }>("/api/client/list");
+      const r = await fetchApi<{ clients: Client[] }>("/api/clients");
       console.log("r---->", r.clients);
       setMyClients(r.clients);
     } catch {

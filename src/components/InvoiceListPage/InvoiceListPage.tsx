@@ -15,7 +15,7 @@ const InvoiceListPage = () => {
   }, []);
   const loadInitialData = async () => {
     try {
-      const r = await fetchApi<{ mylist: Invoice[] }>("/api/invoice/list");
+      const r = await fetchApi<{ mylist: Invoice[] }>("/api/invoices");
       console.log("r---->", r);
       setMyListData(r?.mylist);
     } catch {}

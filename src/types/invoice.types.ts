@@ -10,6 +10,7 @@ export interface Invoice {
   items: Array<Item>;
   client: Client | null;
   subtotal: number;
+  autoNumber?: number;
   createdAt?: string;
   dueAt?: string;
   // [key: string]: string | number | boolean | Array<Item> | Client | null; // Allow Item[] and Client as valid dynamic types

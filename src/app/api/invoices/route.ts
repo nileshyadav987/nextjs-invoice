@@ -5,41 +5,28 @@ import {
 } from "@/library/utilities";
 import Invoice from "@/models/invoiceModel";
 import { connectToDatabase } from "@/library/mongoose";
+import moment from "moment";
+import Business from "@/models/businessModel";
+import mongoose from "mongoose";
 
 export async function GET(req: NextRequest) {
   try {
-    // Extract query parameters
-    const url = new URL(req.url);
-    const invoiceId = url.searchParams.get("id");
-
-    if (!invoiceId) {
-      return NextResponse.json(
-        { error: "Invoice ID is required" },
-        { status: 400 }
-      );
-    }
-
-    // Retrieve business details from the token
+    const userMainData = await getUserDetailsFromToken(req);
     const businessMainData = await getBusinessDetailsFromToken(req);
-
-    // Find the invoice by ID
-    const invoice = await Invoice.findOne({
-      _id: invoiceId,
-      business: businessMainData._id,
+    // console.log('userMainData-------------------------------->', typeof userMainData, userMainData);
+    await connectToDatabase();
+    const invoices = await Invoice.find({
+      business: businessMainData?._id,
     });
-
-    if (!invoice) {
-      return NextResponse.json({ error: "Invoice not found" }, { status: 404 });
-    }
-
-    // Respond with the invoice and business details
-    return NextResponse.json({ invoice }, { status: 200 });
+    const formattedInvoices = invoices.map((v) => ({
+      ...v.toObject(), // Convert Mongoose document to plain object
+      createdAt: moment(v.createdAt).format("YYYY-MM-DD HH:mm"), // Format the date
+      dueAt: moment().format("YYYY-MM-DD HH:mm"), // Format the date
+    }));
+    return NextResponse.json({ mylist: formattedInvoices }, { status: 200 });
   } catch (e) {
-    console.error("Error retrieving invoice:", e);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    console.error("e--------->", e);
+    return NextResponse.json({}, { status: 500 });
   }
 }
 
@@ -75,6 +62,15 @@ export async function POST(req: NextRequest) {
       invoice.total = totalAmount;
       invoice.client = input.client;
     } else {
+      const businessDetails = await Business.findByIdAndUpdate(
+        businessMainData._id,
+        { $inc: { autoIncrement: 1 } },
+        { new: true }
+      );
+      if (!businessDetails) {
+        throw new Error("Business not found.");
+      }
+      console.log("businessDetails", businessDetails);
       invoice = new Invoice({
         items: updatedItems,
         business: businessMainData._id,
@@ -82,7 +78,7 @@ export async function POST(req: NextRequest) {
         subtotal: totalAmount,
         total: totalAmount,
         client: input.client,
-        totalPaid: 0,
+        autoNumber: businessDetails.autoIncrement
       });
     }
 
