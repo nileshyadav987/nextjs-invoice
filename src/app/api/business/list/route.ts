@@ -3,7 +3,6 @@ import { connectToDatabase } from "@/library/mongoose";
 import Business from "@/models/businessModel";
 import { getUserDetailsFromToken } from "@/library/utilities";
 import mongoose from "mongoose";
-import { generateToken } from "@/library/jwt";
 
 export async function GET(req: NextRequest) {
   try {

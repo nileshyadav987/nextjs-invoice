@@ -9,10 +9,10 @@ export interface IPayment extends Document {
   business: mongoose.Types.ObjectId;
   client: {
     _id: { type: mongoose.Types.ObjectId };
-    name: { type: String };
-    email: { type: String };
-    mobile: { type: String };
-    address: { type: String };
+    name: { type: string };
+    email: { type: string };
+    mobile: { type: string };
+    address: { type: string };
   };
 }
 

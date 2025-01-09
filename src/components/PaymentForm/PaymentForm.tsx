@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InnerHeader from "../InnerHeader/Index";
 import Link from "next/link";
 import { Modal, ModalHeader } from "flowbite-react";
@@ -14,7 +14,6 @@ const PaymentForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [invoiceData, setInvoiceData] = useState<Invoice[]>([]);
 
-  const item = { description: "", qty: "", rate: "" };
   const [mainData, setMainData] = useState<Payment>({
     _id: "",
     client: null,
@@ -45,6 +44,7 @@ const PaymentForm = () => {
         console.log("Saved successful", result);
       }
     } catch (err) {
+      console.error("err---->333", err);
       setError("Network error. Please try again later.");
     } finally {
       setLoading(false);
@@ -65,7 +65,7 @@ const PaymentForm = () => {
     } catch {}
   };
 
-  console.log("mainData---->", mainData);
+  console.log("mainData---->", mainData, error);
 
   return (
     <>
@@ -165,13 +165,14 @@ const PaymentForm = () => {
                         <label className="mb-3 block text-sm font-medium text-black ">
                         Message
                         </label>
-                        <textarea
-                          placeholder="Address"
+                        <input
+                          type="text"
+                          placeholder="Message/Note"
                           className="w-full rounded-lg border-[1.5px] border-primary bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
                           onChange={handleFieldChange}
-                          name="address"
+                          name="message"
                           value={mainData.message || ""}
-                        ></textarea>
+                        />
                       </div>
                     </div>
                   </div>
@@ -188,6 +189,7 @@ const PaymentForm = () => {
           data={invoiceData}
           onRowChoose={(data) => {
             console.log("huhibjh", data);
+            setMainData(prev=> ({...prev, invoiceId: data._id, client: data.client}));
             setShowModal(false);
           }}
         />
